@@ -6,6 +6,7 @@ export default function useLetsgo(sum=1){
     const [a ,setA] =useState(sum);
     const indexurl ="http://localhost:5000/api/count";
 
+    
     useEffect(()=>{
         async function fetchcatch(){
             const response = await axios.get(indexurl);

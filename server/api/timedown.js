@@ -1,11 +1,48 @@
 //這裡做為倒數器的網頁
-import React from "react";
-import {useEffect, useState} from 'react';
+let tiStop =null;
+let total =0;//剩餘時間(sec)
+
+function timeoutput(secinput){
+    const min =Math.floor(secinput/60);//宣告分秒變數 分=總時間/60取整數  秒=總時間/60取餘數
+    const sec = secinput % 60;
+    return({min ,sec});
+}
+
+exports.start =(req, res) =>{
+    const {mininput, secinput} =req.body;//取得資料
+    total =mininput *60 +secinput;
+
+    // 設定 HTTP 標頭，啟用 chunked 傳輸
+    res.writeHead(200, {
+        "Content-Type": "application/json",
+        "Transfer-Encoding": "chunked"
+    });
+
+    tiStop = setInterval(() => {
+            if (total <= 0) {
+                clearInterval(tiStop);//清除計時器
+                tiStop= null;//將計時器設置為空值
+                //return res.json({ message: "時間到", remaining: timeoutput(0) });
+                res.write(JSON.stringify({ message: "時間到", remaining: timeoutput(0) }) + "\n");
+                return res.end(); // 結束回應
+                //res.end();
+                }
+            total -= 1 ;//總時間-1
+            res.write(JSON.stringify({ remaining: timeoutput(total) }));
+            //res.json({remaining : timeoutput(total)});
+       }, 1000);
+}
+
+exports.stop =(req, res) =>{
+    if(tiStop){
+        clearInterval(tiStop);
+        tiStop =null;
+    }
+    res.json({message:"計時停止" ,remaining: timeoutput(total)});
+}
 
 
-
-
-export default function Timedown(){
+/*export default function Timedown(){
     function rundown(){//偵測按鈕 並設置tiStop為true
         const mininput =parseInt(document.getElementById('min').value);//取得min值並轉為整數
         const secinput =parseInt(document.getElementById('sec').value);
@@ -35,15 +72,4 @@ export default function Timedown(){
 
     const minn = Math.floor(total / 60);//宣告分秒變數 分=總時間/60取整數  秒=總時間/60取餘數
     const secc = total % 60;
-    
-    return(
-        <div>
-        <section>
-        <input type="number" placeholder='分' id="min" style={{Align:'center'}}></input>
-        <input type="number" placeholder='秒' id="sec"style={{Align:'center'}}></input>
-        <button id="ti" style={{textAlign:'center'}} onClick={rundown}>計時開始</button>
-        <h1>{String(minn).padStart(2,'0')}:{String(secc).padStart(2,'0')}</h1>
-        </section>
-        </div>
-    )
-}
+}*/

@@ -7,6 +7,7 @@ exports.getcount = (req,res) =>{
 };
 
 exports.postcount = (req,res)=>{
+    console.log(req.body);
     const { action } =req.body;
     if(action =="up"){
         count+=1;

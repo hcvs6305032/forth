@@ -2,6 +2,9 @@
 const express =require('express');
 const cors =require('cors');
 const countroute =require('./route/countroute.js');
+const timedownroute =require('./route/timedownroute.js');
+const dataroute =require('./route/dataroute.js');
+
 
 const app =express();
 const port =5000;
@@ -10,6 +13,11 @@ app.use(cors());
 app.use(express.json());
 //設定count路由
 app.use("/api", require("./route/countroute"));
+//設定倒數器路由
+app.use("/api", require("./route/timedownroute"));
+//設定資料庫路由
+app.use("/api", require("./route/dataroute"));
+
 
 //監聽伺服器
 app.listen(port, ()=>{
