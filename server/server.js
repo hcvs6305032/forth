@@ -4,6 +4,7 @@ const cors =require('cors');
 const countroute =require('./route/countroute.js');
 const timedownroute =require('./route/timedownroute.js');
 const dataroute =require('./route/dataroute.js');
+const loginroute =require("./route/loginroute.js");
 
 
 const app =express();
@@ -17,6 +18,8 @@ app.use("/api", require("./route/countroute"));
 app.use("/api", require("./route/timedownroute"));
 //設定資料庫路由
 app.use("/api", require("./route/dataroute"));
+//設定登入路由
+app.use("/api", require("./route/loginroute"));
 
 
 //監聽伺服器
