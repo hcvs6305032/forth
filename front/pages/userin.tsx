@@ -1,23 +1,43 @@
 import React, { useState } from "react";
 import Link from 'next/link';
+import useLogin from "./hooks/useLogin";
+
 
 
 export default function Login(){
-    const [accountin, setAccountin] =useState();
-    const [passwordin, setPasswordin] =useState();
+    const {user, error, login} =useLogin();
+    const [emailin, setEmailin] =useState("");
+    const [passin, setPassin] =useState("");
 
-    const login =() =>{
-        
+    const handleSubmit = async (e: React.FormEvent) =>{
+        e.preventDefault();
+        await login(emailin, passin);
     }
+
+
     return(
         <div>
-            
-            <form  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: "center",height: "80vh" }}>
+            <form  onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: "center",height: "80vh" }}>
                 <h1>使用者登入</h1>
-                <input type='text' name={accountin} placeholder="請輸入帳號"></input><br/>
-                <input type='password' name={passwordin} placeholder="請輸入密碼"></input><br/>
-                <button>登入</button>
+                <input type='text' 
+                    value={emailin} 
+                    onChange={(e)=>setEmailin(e.target.value)} 
+                    placeholder="請輸入帳號"></input><br/>
+                <input type='password' 
+                    value={passin} 
+                    onChange={(e)=>setPassin(e.target.value)} 
+                    placeholder="請輸入密碼"></input><br/>
+                <button type="submit">登入</button>
             </form>
+
+            {error && <p> {error}</p>}
+
+            {user && (
+                <div>
+                    <h3>歡迎, {user.name}</h3>
+                    <p>Email: {user.email}</p>
+                </div>
+            )}
         </div>
     );
 }

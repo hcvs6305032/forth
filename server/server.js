@@ -5,7 +5,7 @@ const countroute =require('./route/countroute.js');
 const timedownroute =require('./route/timedownroute.js');
 const dataroute =require('./route/dataroute.js');
 const loginroute =require("./route/loginroute.js");
-
+const productroute =require("./route/productroute.js");
 
 const app =express();
 const port =5000;
@@ -20,7 +20,8 @@ app.use("/api", require("./route/timedownroute"));
 app.use("/api", require("./route/dataroute"));
 //設定登入路由
 app.use("/api", require("./route/loginroute"));
-
+//設定商品路由
+app.use("/api", require("./route/productroute"));
 
 //監聽伺服器
 app.listen(port, ()=>{
