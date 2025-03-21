@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {useRouter } from "next/router";
 
@@ -9,6 +9,11 @@ const useLogin =() =>{
     const [user, setUser] =useState(null);
     const [error, setError] =useState(null);
     const  router =useRouter();
+
+    useEffect(() =>{
+        const storeuser =localStorage.getItem("user");
+        setUser(JSON.parse(storeuser));
+    },[]);
 
     const login =async (email, password)=>{
         try{

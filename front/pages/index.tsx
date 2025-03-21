@@ -5,7 +5,6 @@ import Link from "next/link";
 import axios from "axios";
 import useLetsgo from "./hooks/useLetsgo";
 import {useRouter} from "next/router";
-import { link } from "fs";
 
 export default function Home(){
     const {a,cclick} =useLetsgo(1);
