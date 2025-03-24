@@ -7,8 +7,7 @@ export default function useCart(){
     const [ cart, serCart] =useState([]);
 
     const incart =async(userId, productId, quantity) =>{
-        const response =await axios.post(apiurl, {userId, productId, quantity});
-        console.log("加入購物車成功", response.data);
+        const response =await axios.post(apiurl, {userId: parseInt(userId), productId: parseInt(productId), quantity: parseInt(quantity) || 1});
 
     }
     return {cart, incart};

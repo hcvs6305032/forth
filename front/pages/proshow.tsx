@@ -10,10 +10,11 @@ export default function Produc(){
     const {produs} =usePro();
     const {incart} =useCart();
     const router =useRouter();
-    const storeuser =localStorage.getItem("user");
-    alert(storeuser);
-    // const [user, setUser ]=useState([]);
-
+   
+    const [user, setUser] = useState(() => {
+        const storeuser = localStorage.getItem("user");
+        return storeuser ? JSON.parse(storeuser) : null;
+    });
     // useEffect(() =>{
     //     const storeuser =localStorage.getItem("user");
     //     console.log("localStorage user:", storeuser);
@@ -50,7 +51,7 @@ export default function Produc(){
                         <button type="button" onClick={()=> handleQuan(item.id, (quantity[item.id] ||1) +1)}>+</button>
                         </div>
 
-                        <button type="button" onClick={() =>{incart(storeuser.id, item.id, quantity[item.id]|| 1)}}> 加入購物車</button>
+                        <button type="button" onClick={() =>{incart(user.id, item.id, quantity[item.id]|| 1)}}> 加入購物車</button>
                     </div>
                     </form>
                 ))}
