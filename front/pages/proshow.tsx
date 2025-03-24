@@ -10,11 +10,9 @@ export default function Produc(){
     const {produs} =usePro();
     const {incart} =useCart();
     const router =useRouter();
-   
-    const [user, setUser] = useState(() => {
-        const storeuser = localStorage.getItem("user");
-        return storeuser ? JSON.parse(storeuser) : null;
-    });
+
+    const { user } =useLogin();
+
     // useEffect(() =>{
     //     const storeuser =localStorage.getItem("user");
     //     console.log("localStorage user:", storeuser);
@@ -38,8 +36,8 @@ export default function Produc(){
             <div style={{display:"flex"}}>
                 {produs.map((item) =>(
                     
-                    <form>
-                    <div key={item.id} style={{margin:"20px"}}>
+                    <form key={item.id}>
+                    <div style={{margin:"20px"}}>
                         <h1>{item.id} {item.proname}</h1><br/>
                         商品描述: <p>{item.description}</p><br/>
                         <p>價錢:{item.price}</p>
